@@ -32,41 +32,43 @@
 
           <v-expansion-panels>
             <v-list-item>
-              <v-list-item-title>Buzz</v-list-item-title>
+              <v-list-item-title>Map</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title>History</v-list-item-title>
             </v-list-item>
 
             <v-expansion-panel>
               <v-expansion-panel-header>
-                Category 1
+                Analytics
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-list-item>
-                  <v-list-item-title>Bar</v-list-item-title>
+                  <v-list-item-title>Today</v-list-item-title>
                 </v-list-item>
 
                 <v-list-item>
-                  <v-list-item-title>Fizz</v-list-item-title>
+                  <v-list-item-title>Location</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-title>Notifications</v-list-item-title>
                 </v-list-item>
               </v-expansion-panel-content>
             </v-expansion-panel>
 
-            <div>.</div>
-
-            <v-list-item>
-              <v-list-item-title>Buzz 2</v-list-item-title>
-            </v-list-item>
-
             <v-expansion-panel>
               <v-expansion-panel-header>
-                Category 2
+                Settings
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-list-item>
-                  <v-list-item-title>Bar 2</v-list-item-title>
+                  <v-list-item-title>General</v-list-item-title>
                 </v-list-item>
 
                 <v-list-item>
-                  <v-list-item-title>Fizz 2</v-list-item-title>
+                  <v-list-item-title>Notifications</v-list-item-title>
                 </v-list-item>
               </v-expansion-panel-content>
             </v-expansion-panel>
