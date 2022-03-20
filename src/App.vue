@@ -22,7 +22,7 @@
         dense
       >
         <v-list-item-group
-          v-model="group1"
+          v-model="group"
         >
           <v-list-item>
             <v-spacer></v-spacer>
@@ -89,15 +89,11 @@ export default {
 
   data: () => ({
     drawer: false,
-    group1: null,
-    group2: null,
+    group: null,
   }),
 
   watch: {
-    group1 () {
-      this.drawer = false
-    },
-    group2 () {
+    group () {
       this.drawer = false
     },
   },
