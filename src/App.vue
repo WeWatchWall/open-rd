@@ -27,7 +27,6 @@
           <v-list-item>
             <v-spacer></v-spacer>
           </v-list-item>
-
           
           <v-list-item>
             <v-list-item-title>Buzz</v-list-item-title>
@@ -48,17 +47,11 @@
                 </v-list-item>
               </v-expansion-panel-content>
             </v-expansion-panel>
-          </v-expansion-panels>
-        </v-list-item-group>
 
-        <v-list-item-group
-          v-model="group2"
-        >          
-          <v-list-item>
-            <v-list-item-title>Buzz 2</v-list-item-title>
-          </v-list-item>
-          
-          <v-expansion-panels>
+            <v-list-item>
+              <v-list-item-title>Buzz 2</v-list-item-title>
+            </v-list-item>
+
             <v-expansion-panel>
               <v-expansion-panel-header>
                 Category 2
