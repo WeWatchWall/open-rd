@@ -68,7 +68,30 @@
                 </v-list-item>
 
                 <v-list-item>
+                  <v-list-item-title>Vehicles</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-title>Drivers</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item>
                   <v-list-item-title>Notifications</v-list-item-title>
+                </v-list-item>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                Info
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-list-item>
+                  <v-list-item-title>System</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-title>License</v-list-item-title>
                 </v-list-item>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -95,12 +118,14 @@ export default {
 
   data: () => ({
     drawer: false,
-    group: null,
+    group: 1,
   }),
 
   watch: {
     group () {
       this.drawer = false
+
+      // TODO
       console.log(this.$data.group);
     },
   },
