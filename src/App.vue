@@ -28,15 +28,24 @@
             <v-spacer></v-spacer>
           </v-list-item>  
         
-          <v-subheader>Open Rd.</v-subheader>
+          <v-subheader>
+            <v-icon>mdi-cellphone-marker</v-icon>  
+            Open Rd.
+          </v-subheader>
 
           <v-expansion-panels>
             <v-list-item>
-              <v-list-item-title>Map</v-list-item-title>
+              <v-list-item-title>
+                <v-icon>mdi-map</v-icon>
+                Map
+              </v-list-item-title>
             </v-list-item>
 
             <v-list-item>
-              <v-list-item-title>History</v-list-item-title>
+              <v-list-item-title>
+                <v-icon>mdi-history</v-icon>
+                History
+              </v-list-item-title>
             </v-list-item>
 
             <v-expansion-panel>
@@ -105,19 +114,19 @@
     </v-navigation-drawer>
 
     <v-main>
-      <HelloWorld/>
+      <MainMap/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import MainMap from './components/MainMap';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    MainMap,
   },
 
   data: () => ({
