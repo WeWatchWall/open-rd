@@ -1,5 +1,18 @@
 <template>
   <v-container>
+    <!-- TODO: Expensive button. -->
+    <v-btn
+      color="primary"
+      elevation="0"
+      fab
+      small
+      fixed
+      top
+      right
+      style='top:0.3em; z-index:99;'
+    >
+      <v-icon>mdi-dots-vertical</v-icon>
+    </v-btn>
     <v-row class="text-center">
       <v-col cols="12">
         <v-img

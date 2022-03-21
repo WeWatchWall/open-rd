@@ -76,6 +76,10 @@
                 </v-list-item>
 
                 <v-list-item>
+                  <v-list-item-title>Routes</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item>
                   <v-list-item-title>Notifications</v-list-item-title>
                 </v-list-item>
               </v-expansion-panel-content>
