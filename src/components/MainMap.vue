@@ -44,7 +44,6 @@
     }),
 
     mounted: async function () {
-
       let map = new Map({
         layers: [
           new TileLayer({
@@ -95,6 +94,10 @@
         const coordinates = geolocation.getPosition();
         positionFeature.setGeometry(coordinates ? new Point(coordinates) : null);
         view.setCenter(coordinates);
+
+        // TODO: Notifications
+        // var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
+        // (new Audio(mp3_url)).play();
       });
 
       // handle geolocation error.
