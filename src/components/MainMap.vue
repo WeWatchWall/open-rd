@@ -22,7 +22,7 @@
     <v-card
       elevation="2"
     >
-      <div id="map" class="map" tabindex="0" style="height: 60vh; width: 100%;"></div>
+      <div id="map" class="map" tabindex="0" style="height: 70vh; width: 100%;"></div>
     </v-card>
   </v-container>
 </template>
@@ -53,8 +53,6 @@
     }),
 
     mounted: async function () {
-      window.scrollTo(0, 1);
-
       const vectorSource = new VectorSource({
         format: new OSMXML(),
         loader: function (extent, resolution, projection, success, failure) {

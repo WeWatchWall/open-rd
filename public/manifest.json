@@ -1,4 +1,10 @@
 {
+  "short_name": "Open Rd.",
+  "name": "Open Road R&D",
+  "description": "Humanitarian measurement, notification, and innovation for transportation.",
+  "start_url": "/",
+  "display": "fullscreen",
+  "scope": "/",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
