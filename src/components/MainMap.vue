@@ -17,7 +17,7 @@
     <v-card
       elevation="2"
     >
-      <div id="map" class="map" tabindex="0" style="height: 70vh; width: 100%"></div>
+      <div id="map" class="map" tabindex="0" style="height: 70vh; width: 100%;"></div>
     </v-card>
   </v-container>
 </template>
@@ -48,40 +48,6 @@
     }),
 
     mounted: async function () {
-      
-      const styles = {
-        'highway': {
-          'service': new Style({
-            stroke: new Stroke({
-              color: 'blue',
-              width: 2,
-            }),
-            text: new Text({
-              font: 'bold 16px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              placement: 'line',
-              textBaseline: 'ideographic',
-              fill: new Fill({
-                color: 'blue',
-              }),
-            }),
-          }),
-          '.*': new Style({
-            stroke: new Stroke({
-              color: 'red',
-              width: 3,
-            }),
-            text: new Text({
-              font: 'bold 16px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              placement: 'line',
-              textBaseline: 'ideographic',
-              fill: new Fill({
-                color: 'red',
-              }),
-            }),
-          }),
-        },
-      };
-
       const vectorSource = new VectorSource({
         format: new OSMXML(),
         loader: function (extent, resolution, projection, success, failure) {
@@ -116,6 +82,7 @@
       const vector = new VectorLayer({
         declutter: true,
         source: vectorSource,
+        background: '#eeeeee',
         style: function (feature) {
           for (const key in styles) {
             const value = feature.get(key);
@@ -204,5 +171,108 @@
     methods: {
 
     },
-  }
+  };
+
+  const styles = {
+    'highway': {
+      'motorway.*': new Style({
+        stroke: new Stroke({
+          color: 'red',
+          width: 4,
+        }),
+        text: new Text({
+          font: 'bold 16px "Open Sans", "Arial Unicode MS", "sans-serif"',
+          placement: 'line',
+          textBaseline: 'ideographic',
+          fill: new Fill({
+            color: 'red',
+          }),
+        }),
+      }),
+      'trunk.*': new Style({
+        stroke: new Stroke({
+          color: 'orange',
+          width: 2,
+        }),
+        text: new Text({
+          font: 'bold 16px "Open Sans", "Arial Unicode MS", "sans-serif"',
+          placement: 'line',
+          textBaseline: 'ideographic',
+          fill: new Fill({
+            color: 'red',
+          }),
+        }),
+      }),
+      'primary.*': new Style({
+        stroke: new Stroke({
+          color: 'orange',
+          width: 2,
+        }),
+        text: new Text({
+          font: 'bold 16px "Open Sans", "Arial Unicode MS", "sans-serif"',
+          placement: 'line',
+          textBaseline: 'ideographic',
+          fill: new Fill({
+            color: 'red',
+          }),
+        }),
+      }),
+      'secondary.*': new Style({
+        stroke: new Stroke({
+          color: 'orange',
+          width: 2,
+        }),
+        text: new Text({
+          font: 'bold 16px "Open Sans", "Arial Unicode MS", "sans-serif"',
+          placement: 'line',
+          textBaseline: 'ideographic',
+          fill: new Fill({
+            color: 'red',
+          }),
+        }),
+      }),          
+      'tertiary.*': new Style({
+        stroke: new Stroke({
+          color: 'yellow',
+          width: 2,
+        }),
+        text: new Text({
+          font: 'bold 16px "Open Sans", "Arial Unicode MS", "sans-serif"',
+          placement: 'line',
+          textBaseline: 'ideographic',
+          fill: new Fill({
+            color: 'orange',
+          }),
+        }),
+      }),
+      'service': new Style({
+        stroke: new Stroke({
+          color: 'blue',
+          width: 1,
+        }),
+        text: new Text({
+          font: 'bold 16px "Open Sans", "Arial Unicode MS", "sans-serif"',
+          placement: 'line',
+          textBaseline: 'ideographic',
+          fill: new Fill({
+            color: 'blue',
+          }),
+        }),
+      }),
+      '.*': new Style({
+        stroke: new Stroke({
+          color: 'gray',
+          width: 1,
+        }),
+        text: new Text({
+          font: 'bold 14px "Open Sans", "Arial Unicode MS", "sans-serif"',
+          placement: 'line',
+          textBaseline: 'ideographic',
+          fill: new Fill({
+            color: 'red',
+          }),
+        }),
+      }),
+    },
+  };
 </script>
