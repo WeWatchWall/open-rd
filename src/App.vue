@@ -16,6 +16,7 @@
     <v-navigation-drawer
       v-model="drawer"
       absolute
+      style="position:fixed; top:0; left:0; overflow-y:scroll;"
     >
       <v-list
         nav
