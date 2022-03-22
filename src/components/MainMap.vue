@@ -36,7 +36,7 @@
   import Geolocation from 'ol/Geolocation';
   import Point from 'ol/geom/Point';
   import Feature from 'ol/Feature';
-  import {Circle as CircleStyle, Fill, Stroke, Style, Text} from 'ol/style';
+  import {Icon as IconStyle,Fill, Stroke, Style, Text} from 'ol/style';
 
   export default {
     name: 'MainMap',
@@ -123,18 +123,17 @@
       this.geolocation = geolocation;
 
       var positionFeature = new Feature();
+      var directionFeature = new IconStyle({
+        src: './img/navigation.svg',
+        rotateWithView: true,
+        anchor: [0.5, 0.5],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'fraction',
+        color: 'blue'
+      });
       positionFeature.setStyle(
         new Style({
-          image: new CircleStyle({
-            radius: 6,
-            fill: new Fill({
-              color: '#3399CC',
-            }),
-            stroke: new Stroke({
-              color: '#fff',
-              width: 2,
-            }),
-          }),
+          image: directionFeature
         })
       );
 
@@ -147,6 +146,8 @@
         const coordinates = geolocation.getPosition();
         positionFeature.setGeometry(coordinates ? new Point(coordinates) : null);
         view.setCenter(coordinates);
+
+        directionFeature.setRotation(geolocation.getHeading());
 
         // TODO: Notifications
         // var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
