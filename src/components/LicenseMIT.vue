@@ -29,11 +29,14 @@
   </v-container>
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component({
     name: 'LicenseMIT',
 
     data: () => ({
     }),
-  };
+  })
+  export default class LicenseMIT extends Vue {}
 </script>

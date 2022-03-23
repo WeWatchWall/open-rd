@@ -125,11 +125,12 @@
   </v-app>
 </template>
 
-<script>
-import MainMap from './components/MainMap';
-import LicenseMIT from './components/LicenseMIT';
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import MainMap from './components/MainMap.vue';
+import LicenseMIT from './components/LicenseMIT.vue';
 
-export default {
+@Component({
   name: 'App',
 
   components: {
@@ -144,12 +145,25 @@ export default {
 
   watch: {
     group () {
-      this.drawer = false
+      this.$data.drawer = false
 
       // TODO
       console.log(this.$data.group);
     },
   },
+})
+export default class App extends Vue {}
 
-};
+// <style lang="scss">
+// #app {
+//   font-family: Avenir, Helvetica, Arial, sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+//   text-align: center;
+//   color: #2c3e50;
+//   margin-top: 60px;
+// }
+// </style>
 </script>
+
+
