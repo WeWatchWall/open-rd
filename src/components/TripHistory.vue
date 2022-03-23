@@ -11,8 +11,8 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
 
-  // import { AudioDataProvider } from "../audio/AudioDataProvider";
-  // import { Radix2FFT } from "../audio/Radix2FFT.";
+  import { AudioDataProvider } from "../audio/AudioDataProvider";
+  import { Radix2FFT } from "../audio/Radix2FFT";
 
   @Component({
     name: 'TripHistory',
@@ -21,13 +21,13 @@
     }),
 
     mounted: async function () {
-      // const dataProvider = new AudioDataProvider();
+      const dataProvider = new AudioDataProvider();
 
-      // const bufferSize = dataProvider.bufferSize;
-      // // const sampleRate = dataProvider.sampleRate;
+      const bufferSize = dataProvider.bufferSize;
+      // const sampleRate = dataProvider.sampleRate;
 
-      // // const fft =
-      // new Radix2FFT(bufferSize);
+      // const fft =
+      new Radix2FFT(bufferSize);
     },
 
     methods: {
