@@ -115,19 +115,26 @@
     </v-navigation-drawer>
 
     <v-main>
-      <MainMap/>
+      <div v-if="group==1">
+        <MainMap/>
+      </div>
+      <div v-if="group==4">
+        <LicenseMIT/>
+      </div>
     </v-main>
   </v-app>
 </template>
 
 <script>
 import MainMap from './components/MainMap';
+import LicenseMIT from './components/LicenseMIT';
 
 export default {
   name: 'App',
 
   components: {
     MainMap,
+    LicenseMIT
   },
 
   data: () => ({
