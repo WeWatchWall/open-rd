@@ -118,6 +118,9 @@
       <div v-if="group==1">
         <MainMap/>
       </div>
+      <div v-if="group==2">
+        <TripHistory/>
+      </div>
       <div v-if="group==4">
         <LicenseMIT/>
       </div>
@@ -128,6 +131,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import MainMap from './components/MainMap.vue';
+import TripHistory from './components/TripHistory.vue';
 import LicenseMIT from './components/LicenseMIT.vue';
 
 @Component({
@@ -135,6 +139,7 @@ import LicenseMIT from './components/LicenseMIT.vue';
 
   components: {
     MainMap,
+    TripHistory,
     LicenseMIT
   },
 
