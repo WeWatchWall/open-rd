@@ -33,40 +33,7 @@
       loaded: false,
       chartData: null,
       info: {},
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: {
-          duration: 0
-        },
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            enabled: true
-          }
-        },
-        scales: {
-          x: {
-            ticks: {
-              // For a category axis, the val is the index so the lookup via getLabelForValue is needed
-              callback: function(val, index) {
-                // Hide every 2nd tick label
-                return index % 5 === 0 ? this.getLabelForValue(Number.parseFloat(val.toString())) : '';
-              },
-            }
-          },
-          y: {
-            max: 45,
-            min: 0
-          }
-        },
-        hover: {
-          mode: 'nearest',
-          intersect: true
-        },
-      } as ChartOptions
+      chartOptions: chartOptions
     }),
 
     // graphs
@@ -165,4 +132,39 @@
     },
   })
   export default class TripHistory extends Vue {}
+
+  const chartOptions: ChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: {
+      duration: 0
+    },
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        enabled: false
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          // For a category axis, the val is the index so the lookup via getLabelForValue is needed
+          callback: function(val, index) {
+            // Hide every 2nd tick label
+            return index % 5 === 0 ? this.getLabelForValue(Number.parseFloat(val.toString())) : '';
+          },
+        }
+      },
+      y: {
+        max: 35,
+        min: 0
+      }
+    },
+    hover: {
+      mode: 'nearest',
+      intersect: true
+    },
+  };
 </script>
