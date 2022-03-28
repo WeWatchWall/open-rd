@@ -91,7 +91,7 @@
         let rawData = percentFftData.slice(0, 35);
         let average = CurveCalc.movingAvg(rawData, 3);
 
-        let diffVariance = Math.round(CurveCalc.calculateSD(CurveCalc.calculateVariance(CurveCalc.differential(average))));
+        let diffVariance = Math.round(CurveCalc.calculateSD(CurveCalc.calculateVariance(average)) * 0.8);
 
         let puker = CurveCalc.poly_simplify(average.map((value:any, index:any) => {
           return [index * diffVariance, value];
@@ -158,7 +158,7 @@
         }
       },
       y: {
-        max: 35,
+        max: 45,
         min: 0
       }
     },
