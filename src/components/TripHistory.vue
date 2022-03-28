@@ -4,7 +4,7 @@
       elevation="2"
     >
       <div style="height:10vh;">
-        Peaks: {{peaks}}
+        Info: {{info}}
       </div>
       <bar-chart v-if="loaded" :chart-data="chartData" :options="chartOptions"></bar-chart>
     </v-card>
@@ -32,12 +32,12 @@
     data: () => ({
       loaded: false,
       chartData: null,
-      peaks: [],
+      info: {},
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
         animation: {
-          duration: 1
+          duration: 0
         },
         plugins: {
           legend: {
@@ -58,8 +58,8 @@
             }
           },
           y: {
-            max: 15,
-            min: -10
+            max: 45,
+            min: 0
           }
         },
         hover: {
@@ -123,25 +123,40 @@
         // console.log(JSON.stringify(fftData)); // Fourier transform.
         let rawData = percentFftData.slice(0, 35);
         let average = CurveCalc.movingAvg(rawData, 3);
-        average = CurveCalc.differential(average);
 
-        average[0] = 0;
-        average[1] = 0;
-        average[2] = 0;
+        let diffVariance = Math.round(CurveCalc.calculateSD(CurveCalc.calculateVariance(CurveCalc.differential(average))));
 
+        let puker = CurveCalc.poly_simplify(average.map((value:any, index:any) => {
+          return [index * diffVariance, value];
+        }), diffVariance * 1.2);
+        let poi = Array(35).fill(0);
+
+        puker.map((value:any) => {
+          if (value[1]) {
+            poi[value[0] / diffVariance] = value[1];
+          }
+        });
+        
         this.$data.chartData = {
           labels: labels,
           datasets: [
             {
               backgroundColor: "blue",
               data: average
+            },
+            {
+              backgroundColor: "red",
+              data: poi
             }
           ]
         };
 
         this.$data.loaded = true;
 
-        this.$data.peaks = CurveCalc.detectPeaks(average, 3, 10);
+        this.$data.info = {
+          diffVariance: diffVariance,
+          // peaks: CurveCalc.detectPeaks(average, 3, 10)
+        };
       }, 50);
     },
 

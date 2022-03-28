@@ -1,5 +1,5 @@
 <style>
-  html {
+  #MainMap {
     overflow-y: hidden !important
   }
 </style>
