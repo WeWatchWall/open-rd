@@ -178,22 +178,6 @@ export class CurveCalc {
     return result;
   }
 
-  static detectPeaks(data, windowWidth, threshold) {
-    const peaks = [];
-    for (let i = 0; i < data.length; i++) {
-      const start = Math.max(0, i - windowWidth);
-      const end = Math.min(data.length, i + windowWidth);
-      let deltaAcc = 0;
-      for (let a = start; a < end; a++) {
-        deltaAcc += Math.abs(data[a - 1] - data[a]);
-      }
-      if (deltaAcc > threshold) {
-        peaks.push(i);
-      }
-    }
-    return peaks;
-  }
-
   static poly_simplify(V, tol) {
     // V ... [[x1,y1],[x2,y2],...] polyline
     // tol  ... approximation tolerance
