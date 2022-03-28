@@ -6,7 +6,8 @@
       <div style="height:10vh;">
         Info: {{info}}
       </div>
-      <bar-chart v-if="loaded" :chart-data="chartData" :options="chartOptions"></bar-chart>
+      <bar-chart v-if="loaded" :chart-data="chartData1" :options="chartOptions1"></bar-chart>
+      <bar-chart v-if="loaded" :chart-data="chartData2" :options="chartOptions2"></bar-chart>
     </v-card>
   </v-container>
 </template>
@@ -31,9 +32,11 @@
 
     data: () => ({
       loaded: false,
-      chartData: null,
+      chartData1: null,
+      chartData2: null,
       info: {},
-      chartOptions: chartOptions
+      chartOptions1: chartOptions1,
+      chartOptions2: chartOptions2
     }),
 
     // graphs
@@ -90,21 +93,20 @@
         // console.log(JSON.stringify(fftData)); // Fourier transform.
         let rawData = percentFftData.slice(0, 35);
         let average = CurveCalc.movingAvg(rawData, 3);
-
-        let diffVariance = Math.round(CurveCalc.calculateSD(CurveCalc.calculateVariance(average)) * 0.8);
+        let variance = Math.round(CurveCalc.calculateSD(CurveCalc.calculateVariance(average)) * 0.8);
 
         let puker = CurveCalc.poly_simplify(average.map((value:any, index:any) => {
-          return [index * diffVariance, value];
-        }), diffVariance);
+          return [index * variance, value];
+        }), variance);
         let poi = Array(35).fill(0);
 
         puker.map((value:any) => {
           if (value[1]) {
-            poi[value[0] / diffVariance] = value[1];
+            poi[value[0] / variance] = value[1];
           }
         });
-        
-        this.$data.chartData = {
+
+        this.$data.chartData1 = {
           labels: labels,
           datasets: [
             {
@@ -118,10 +120,40 @@
           ]
         };
 
+        let diff = CurveCalc.differential(rawData);
+        diff = CurveCalc.movingAvg(diff, 3);
+        let diffVariance = Math.round(CurveCalc.calculateSD(CurveCalc.calculateVariance(diff)));
+
+        puker = CurveCalc.poly_simplify(diff.map((value:any, index:any) => {
+          return [index * variance, value];
+        }), variance * 0.66);
+        poi = Array(35).fill(0);
+
+        puker.map((value:any) => {
+          if (value[1]) {
+            poi[value[0] / variance] = value[1];
+          }
+        });
+
+        this.$data.chartData2 = {
+          labels: labels,
+          datasets: [
+            {
+              backgroundColor: "blue",
+              data: diff
+            },
+            {
+              backgroundColor: "red",
+              data: poi
+            }
+          ]
+        };
+
         this.$data.loaded = true;
 
         this.$data.info = {
-          diffVariance: diffVariance,
+          variance: variance,
+          diffVariance: diffVariance
           // peaks: CurveCalc.detectPeaks(average, 3, 10)
         };
       }, 50);
@@ -133,7 +165,7 @@
   })
   export default class TripHistory extends Vue {}
 
-  const chartOptions: ChartOptions = {
+  const chartOptions1: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     animation: {
@@ -160,6 +192,41 @@
       y: {
         max: 45,
         min: 0
+      }
+    },
+    hover: {
+      mode: 'nearest',
+      intersect: true
+    },
+  };
+  
+  const chartOptions2: ChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: {
+      duration: 0
+    },
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        enabled: false
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          // For a category axis, the val is the index so the lookup via getLabelForValue is needed
+          callback: function(val, index) {
+            // Hide every 2nd tick label
+            return index % 5 === 0 ? this.getLabelForValue(Number.parseFloat(val.toString())) : '';
+          },
+        }
+      },
+      y: {
+        max: 15,
+        min: -10
       }
     },
     hover: {
