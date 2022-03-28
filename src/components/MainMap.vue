@@ -1,10 +1,10 @@
 <style>
   html {
-    overflow-y: hidden !important;
+    overflow-y: hidden !important
   }
 </style>
 <template>
-  <v-container>
+  <v-container id="MainMap">
     <!-- TODO: Expensive button. -->
     <v-btn
       color="primary"

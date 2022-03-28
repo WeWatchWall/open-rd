@@ -2,8 +2,10 @@
   <v-container>
     <v-card
       elevation="2"
-      width="100vw"
     >
+      <div style="height:10vh;">
+        Peaks: {{peaks}}
+      </div>
       <bar-chart v-if="loaded" :chart-data="chartData" :options="chartOptions"></bar-chart>
     </v-card>
   </v-container>
@@ -12,11 +14,13 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
 
-  import { AudioDataProvider } from "../audio/AudioDataProvider";
-  import { Radix2FFT } from "../audio/Radix2FFT";
+  import { AudioDataProvider } from "../signalProcessing/AudioDataProvider";
+  import { Radix2FFT } from "../signalProcessing/Radix2FFT";
 
   import BarChart from "./BarChart.vue";
   import { ChartOptions } from "chart.js";
+
+  import { CurveCalc } from "../signalProcessing/curve_calc";
 
   @Component({
     name: 'TripHistory',
@@ -28,10 +32,10 @@
     data: () => ({
       loaded: false,
       chartData: null,
+      peaks: [],
       chartOptions: {
         responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 1,
+        maintainAspectRatio: false,
         animation: {
           duration: 1
         },
@@ -40,7 +44,7 @@
             display: false
           },
           tooltip: {
-            enabled: false
+            enabled: true
           }
         },
         scales: {
@@ -49,14 +53,19 @@
               // For a category axis, the val is the index so the lookup via getLabelForValue is needed
               callback: function(val, index) {
                 // Hide every 2nd tick label
-                return index % 10 === 0 ? this.getLabelForValue(Number.parseFloat(val.toString())) : '';
+                return index % 5 === 0 ? this.getLabelForValue(Number.parseFloat(val.toString())) : '';
               },
             }
           },
           y: {
-            max: 50
+            max: 15,
+            min: -10
           }
-        }
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: true
+        },
       } as ChartOptions
     }),
 
@@ -76,7 +85,7 @@
       const hzPerDataPoint = sampleRate / bufferSize;
       // const fftSize = fft.fftSize;
 
-      const labels = Array(100).fill(0).map((_, idx) => (idx + 1) * (Math.round(hzPerDataPoint * 100)));
+      const labels = Array(100).fill(0).map((_, idx) => (idx + 1) * (Math.round(hzPerDataPoint * 100))).slice(0, 35);
 
       setInterval(() => {
         if (dataProvider.initialized === false) {
@@ -112,18 +121,27 @@
         // X axis.
         // console.log(`hzPerDataPoint: ${hzPerDataPoint}, bufferSize: ${bufferSize}, fftSize: ${fftSize}`);
         // console.log(JSON.stringify(fftData)); // Fourier transform.
+        let rawData = percentFftData.slice(0, 35);
+        let average = CurveCalc.movingAvg(rawData, 3);
+        average = CurveCalc.differential(average);
+
+        average[0] = 0;
+        average[1] = 0;
+        average[2] = 0;
 
         this.$data.chartData = {
           labels: labels,
           datasets: [
             {
               backgroundColor: "blue",
-              data: percentFftData
+              data: average
             }
           ]
         };
 
         this.$data.loaded = true;
+
+        this.$data.peaks = CurveCalc.detectPeaks(average, 3, 10);
       }, 50);
     },
 
