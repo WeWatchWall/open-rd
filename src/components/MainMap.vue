@@ -1,10 +1,5 @@
-<style>
-  #MainMap {
-    overflow-y: hidden !important
-  }
-</style>
 <template>
-  <v-container id="MainMap">
+  <v-container>
     <!-- TODO: Expensive button. -->
     <v-btn
       color="primary"

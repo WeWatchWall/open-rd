@@ -128,7 +128,7 @@
 
         let puker = CurveCalc.poly_simplify(average.map((value:any, index:any) => {
           return [index * diffVariance, value];
-        }), diffVariance * 1.2);
+        }), diffVariance);
         let poi = Array(35).fill(0);
 
         puker.map((value:any) => {
