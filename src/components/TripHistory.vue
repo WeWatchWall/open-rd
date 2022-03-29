@@ -97,7 +97,7 @@
 
         let puker = CurveCalc.poly_simplify(average.map((value:any, index:any) => {
           return [index * variance, value];
-        }), 4);
+        }), 4); // variance - 1
         let poi = Array(35).fill(0);
 
         puker.map((value:any) => {
@@ -126,7 +126,7 @@
 
         puker = CurveCalc.poly_simplify(diff.map((value:any, index:any) => {
           return [index * variance, value];
-        }), 3);
+        }), 3); // diffVariance + 1
         poi = Array(35).fill(0);
 
         puker.map((value:any) => {
@@ -154,7 +154,6 @@
         this.$data.info = {
           variance: variance,
           diffVariance: diffVariance
-          // peaks: CurveCalc.detectPeaks(average, 3, 10)
         };
       }, 50);
     },
