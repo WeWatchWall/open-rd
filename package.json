@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@types/ol": "^6.5.3",
+    "calculate-correlation": "^1.2.3",
     "chart.js": "^3.7.1",
     "core-js": "^3.8.3",
     "ol": "^6.13.0",

@@ -128,13 +128,20 @@
         let puker = CurveCalc.poly_simplify(average.map((value:any, index:any) => {
           return [index * variance, value];
         }), 4); // variance - 1
-        let poi = Array(35).fill(0);
 
-        puker.map((value:any) => {
-          if (value[1]) {
-            poi[value[0] / variance] = value[1];
+        // Interpolate based on Puker.
+        puker[0] = [0, rawData[0]];
+        let poi = Array(35).fill(0);
+        for (let index = 1; index < puker.length; index++) {
+          const point = puker[index];
+          const previous = puker[index - 1];
+          const numIndices = ((point[0] - previous[0]) / variance) + 1;
+
+          const interpolated = CurveCalc.interpolateArray([previous[1], point[1]], numIndices);
+          for (let j = 0; j < interpolated.length; j++) {
+            poi[previous[0] / variance + j] =  interpolated[j];        
           }
-        });
+        }
 
         this.$data.chartData1 = {
           labels: labels,
