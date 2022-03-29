@@ -60,6 +60,9 @@
       var dateBackgroundNoiseReset = Date.now();
       var backgroundNoise: number[] = [];
 
+      var isSnapshot = false;
+      var noiseSnapshot: number[] = [];
+
       setInterval(() => {
         if (dataProvider.initialized === false) {
             return;
@@ -98,16 +101,25 @@
 
         // Calculate background noise
         let now = Date.now();
-        if (!backgroundNoise.length || now - dateBackgroundNoiseReset > 5000) {
+
+        if (!backgroundNoise.length) { backgroundNoise = rawData; }
+        if (!isSnapshot && dateBackgroundNoiseReset > 1000) { 
+          noiseSnapshot = rawData;
+          isSnapshot = true;
+        }
+
+        if (now - dateBackgroundNoiseReset > 6000) {
           dateBackgroundNoiseReset = now;
-          backgroundNoise = rawData;
+          backgroundNoise = noiseSnapshot;
+          isSnapshot = false;
         } else {
           backgroundNoise = backgroundNoise.map(((value:any, index:any) => {
+            noiseSnapshot[index] = Math.min(noiseSnapshot[index], rawData[index]);
             return Math.min(value, rawData[index]);
           }));
           rawData = rawData.map(((value:any, index:any) => {
             return value - backgroundNoise[index];
-          }))
+          }));
         }
 
         let average = CurveCalc.movingAvg(rawData, 3);
