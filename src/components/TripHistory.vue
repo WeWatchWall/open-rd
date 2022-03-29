@@ -122,11 +122,11 @@
 
         let diff = CurveCalc.differential(rawData);
         diff = CurveCalc.movingAvg(diff, 3);
-        let diffVariance = Math.round(CurveCalc.calculateSD(CurveCalc.calculateVariance(diff)));
+        let diffVariance = 2;
 
         puker = CurveCalc.poly_simplify(diff.map((value:any, index:any) => {
           return [index * variance, value];
-        }), variance * 0.66);
+        }), 3);
         poi = Array(35).fill(0);
 
         puker.map((value:any) => {
