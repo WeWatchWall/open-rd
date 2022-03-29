@@ -93,11 +93,11 @@
         // console.log(JSON.stringify(fftData)); // Fourier transform.
         let rawData = percentFftData.slice(0, 35);
         let average = CurveCalc.movingAvg(rawData, 3);
-        let variance = Math.round(CurveCalc.calculateSD(CurveCalc.calculateVariance(average)) * 0.8);
+        let variance = 5;
 
         let puker = CurveCalc.poly_simplify(average.map((value:any, index:any) => {
           return [index * variance, value];
-        }), variance);
+        }), 4);
         let poi = Array(35).fill(0);
 
         puker.map((value:any) => {
