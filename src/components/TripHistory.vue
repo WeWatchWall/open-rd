@@ -57,6 +57,9 @@
 
       const labels = Array(100).fill(0).map((_, idx) => (idx + 1) * (Math.round(hzPerDataPoint * 100))).slice(0, 35);
 
+      var dateBackgroundNoiseReset = Date.now();
+      var backgroundNoise: number[] = [];
+
       setInterval(() => {
         if (dataProvider.initialized === false) {
             return;
@@ -92,6 +95,21 @@
         // console.log(`hzPerDataPoint: ${hzPerDataPoint}, bufferSize: ${bufferSize}, fftSize: ${fftSize}`);
         // console.log(JSON.stringify(fftData)); // Fourier transform.
         let rawData = percentFftData.slice(0, 35);
+
+        // Calculate background noise
+        let now = Date.now();
+        if (!backgroundNoise.length || now - dateBackgroundNoiseReset > 5000) {
+          dateBackgroundNoiseReset = now;
+          backgroundNoise = rawData;
+        } else {
+          backgroundNoise = backgroundNoise.map(((value:any, index:any) => {
+            return Math.min(value, rawData[index]);
+          }));
+          rawData = rawData.map(((value:any, index:any) => {
+            return value - backgroundNoise[index];
+          }))
+        }
+
         let average = CurveCalc.movingAvg(rawData, 3);
         let variance = 5;
 
