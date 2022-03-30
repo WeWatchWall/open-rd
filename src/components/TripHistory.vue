@@ -31,10 +31,6 @@
       info: []
     }),
 
-    // graphs
-    // worker 
-    //   async interface
-    //   comm interface
     mounted: async function () {
       let classifier = await ml5.soundClassifier(`${location.href}/audio/model.json`);
 
