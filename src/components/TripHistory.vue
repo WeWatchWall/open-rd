@@ -15,7 +15,12 @@
 
   import BarChart from "./BarChart.vue";
 
-  import ml5 from 'ml5';
+  // add "browser": { "fs": false, "node-fetch": false, "string_decoder": false, "crypto": false, "util": false },
+  // to node_modules/@tensorflow-models/speech-commands/package.json after devDependencies.
+  import tf from '@tensorflow/tfjs';
+  import { create } from '@tensorflow-models/speech-commands';
+
+  import annyang from "../annyang.min";
 
   @Component({
     name: 'TripHistory',
@@ -32,15 +37,42 @@
     }),
 
     mounted: async function () {
-      let classifier = await ml5.soundClassifier(`${location.href}/audio/model.json`);
+      console.info(tf);
+      const recognizer = create(
+        "BROWSER_FFT", // fourier transform type, not useful to change
+        undefined, // speech commands vocabulary feature, not useful for your models
+        `${location.href}/audio/model.json`,
+        `${location.href}/audio/metadata.json`
+      );
 
-      classifier.classify((error: any, results: any) => {
-        if (error) { return; }
+      // Check that model and metadata are loaded via HTTPS requests.
+      await recognizer.ensureModelLoaded();
 
-        if (results[0].label == "Jarvis" && results[0].confidence > 0.87) {
-          this.$data.info.push("Hello");
+      annyang!.addCommands({
+        'greeting': () => {
+          this.$data.info.push("Start");
+          setTimeout(recognizerMethod, 800);
         }
       });
+
+      let recognizerMethod = () => {
+        recognizer.listen(async (result): Promise<void> => {
+          let results = result.scores;
+          if (results[1] > 0.87) {
+            this.$data.info.push("Hello");
+            
+            await recognizer.stopListening();
+            setTimeout(() => {annyang!.start({ autoRestart: false, continuous: false });}, 800);
+          }
+        }, {
+          includeSpectrogram: false, // in case listen should return result.spectrogram
+          probabilityThreshold: 0.75,
+          invokeCallbackOnNoiseAndUnknown: false,
+          overlapFactor: 0.75 // probably want between 0.5 and 0.75. More info in README
+        });
+      };
+
+      recognizerMethod();
     },
 
     methods: {

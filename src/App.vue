@@ -145,7 +145,7 @@ import LicenseMIT from './components/LicenseMIT.vue';
 
   data: () => ({
     drawer: false,
-    group: 1,
+    group: 2,
   }),
 
   watch: {
