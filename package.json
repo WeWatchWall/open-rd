@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "@types/ol": "^6.5.3",
-    "calculate-correlation": "^1.2.3",
     "chart.js": "^3.7.1",
     "core-js": "^3.8.3",
+    "ml5": "^0.10.5",
     "ol": "^6.13.0",
     "register-service-worker": "^1.7.2",
     "vue": "^2.6.14",
