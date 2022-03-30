@@ -37,7 +37,7 @@
       classifier.classify((error: any, results: any) => {
         if (error) { return; }
 
-        if (results[0].label == "Jarvis" && results[0].confidence > 0.96) {
+        if (results[0].label == "Jarvis" && results[0].confidence > 0.87) {
           this.$data.info.push("Hello");
         }
       });
