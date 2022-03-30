@@ -132,7 +132,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import MainMap from './components/MainMap.vue';
 import TripHistory from './components/TripHistory.vue';
-import LicenseMIT from './components/LicenseMIT.vue';
+import LicenseMIT from './components/LicenseISC.vue';
 
 @Component({
   name: 'App',
