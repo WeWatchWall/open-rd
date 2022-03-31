@@ -122,7 +122,7 @@
         <TripHistory/>
       </div>
       <div v-if="group==4">
-        <LicenseMIT/>
+        <LicenseISC/>
       </div>
     </v-main>
   </v-app>
@@ -132,7 +132,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import MainMap from './components/MainMap.vue';
 import TripHistory from './components/TripHistory.vue';
-import LicenseMIT from './components/LicenseISC.vue';
+import LicenseISC from './components/LicenseISC.vue';
 
 @Component({
   name: 'App',
@@ -140,7 +140,7 @@ import LicenseMIT from './components/LicenseISC.vue';
   components: {
     MainMap,
     TripHistory,
-    LicenseMIT
+    LicenseISC
   },
 
   data: () => ({
@@ -158,17 +158,6 @@ import LicenseMIT from './components/LicenseISC.vue';
   },
 })
 export default class App extends Vue {}
-
-// <style lang="scss">
-// #app {
-//   font-family: Avenir, Helvetica, Arial, sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   text-align: center;
-//   color: #2c3e50;
-//   margin-top: 60px;
-// }
-// </style>
 </script>
 
 
