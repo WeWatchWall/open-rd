@@ -35,6 +35,8 @@
 
     mounted: async function () {
       console.info(tf);
+
+      // Also responds to: diss, miss, tiss, fiss, stark, start, time
       const recognizer = create(
         "BROWSER_FFT", // fourier transform type, not useful to change
         undefined, // speech commands vocabulary feature, not useful for your models
@@ -54,11 +56,15 @@
       let recognizerMethod = () => {
         recognizer.listen(async (result): Promise<void> => {
           let results = result.scores;
-          if (results[1] > 0.87) {
-            this.$data.info.push("Hello");
-            
+          if (results[1] > 0.87) {            
             await recognizer.stopListening();
-            setTimeout(() => {annyang!.start({ autoRestart: false, continuous: false });}, 800);
+            setTimeout(
+              () => {
+                this.$data.info.push("Hello");
+                annyang!.start({ autoRestart: false, continuous: false });
+              },
+              800
+            );
           }
         }, {
           includeSpectrogram: false, // in case listen should return result.spectrogram
