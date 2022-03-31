@@ -13,8 +13,6 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
 
-  import BarChart from "./BarChart.vue";
-
   // add "browser": { "fs": false, "node-fetch": false, "string_decoder": false, "crypto": false, "util": false },
   // to node_modules/@tensorflow-models/speech-commands/package.json after devDependencies.
   import tf from '@tensorflow/tfjs';
@@ -26,7 +24,6 @@
     name: 'TripHistory',
 
     components: {
-      BarChart
     },
 
     data: () => ({
@@ -48,12 +45,11 @@
       // Check that model and metadata are loaded via HTTPS requests.
       await recognizer.ensureModelLoaded();
 
-      annyang!.addCommands({
-        'greeting': () => {
-          this.$data.info.push("Start");
+      annyang!.addCallback("result", (result: String) => {
+          this.$data.info.push(result);
           setTimeout(recognizerMethod, 800);
         }
-      });
+      );
 
       let recognizerMethod = () => {
         recognizer.listen(async (result): Promise<void> => {
