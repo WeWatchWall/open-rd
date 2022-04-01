@@ -119,7 +119,7 @@
         <MainMap/>
       </div>
       <div v-if="page==2">
-        <VoiceInterface/>
+        <VoiceInterface :status="status"/>
       </div>
       <div v-if="page==4">
         <LicenseISC/>
@@ -145,7 +145,11 @@ import LicenseISC from './components/LicenseISC.vue';
 
   data: () => ({
     drawer: false,
-    page: 2,
+    page: 4,
+    status: {
+      microphone: true,
+      sound: true
+    }
   }),
 
   watch: {

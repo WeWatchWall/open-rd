@@ -1,5 +1,5 @@
 <script>
-import Chart from 'chart.js/auto';
+import Chart from 'chart.js/auto'; // eslint-disable-line no-unused-vars
 import { Bar } from 'vue-chartjs/legacy';
 
 export default {
@@ -8,7 +8,6 @@ export default {
   data: () => ({
   }),
   mounted () {
-    console.log(Chart.name);
     // this.chartData is created in the mixin.
     // If you want to pass options please create a local options object
     this.renderChart(this.chartData, this.options)
