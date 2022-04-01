@@ -1,42 +1,42 @@
 <template>
   <v-container>
-    <v-card
-      elevation="2"
+    <v-dialog
+      v-model="isShow"
+      persistent
     >
-      <div style="height:10vh;">
-        Info: {{info}}
-      </div>
-    </v-card>
+      <v-card
+        elevation="2"
+        style="height:70vh;"
+      >
+        History: {{ history }}
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
 
-  // add "browser": { "fs": false, "node-fetch": false, "string_decoder": false, "crypto": false, "util": false },
-  // to node_modules/@tensorflow-models/speech-commands/package.json after devDependencies.
   import tf from '@tensorflow/tfjs';
   import { create } from '@tensorflow-models/speech-commands';
 
   import annyang from "../annyang.min";
 
   @Component({
-    name: 'TripHistory',
+    name: 'VoiceInterface',
 
     components: {
     },
 
     data: () => ({
-      loaded: false,
-      chartData1: null,
-      chartData2: null,
-      info: []
+      isShow: true,
+      history: []
     }),
 
     mounted: async function () {
       console.info(tf);
 
-      // Also responds to: diss, miss, tiss, fiss, stark, start, time
+      // Also responds to: *phone hits table*, diss, miss, tiss, fiss, stark, start, time, mime
       const recognizer = create(
         "BROWSER_FFT", // fourier transform type, not useful to change
         undefined, // speech commands vocabulary feature, not useful for your models
@@ -48,7 +48,13 @@
       await recognizer.ensureModelLoaded();
 
       annyang!.addCallback("result", (result: String) => {
-          this.$data.info.push(result);
+          this.$data.history.push(result);
+        }
+      );
+      
+      annyang!.addCallback(
+        "end", 
+        () => {
           setTimeout(recognizerMethod, 800);
         }
       );
@@ -60,7 +66,7 @@
             await recognizer.stopListening();
             setTimeout(
               () => {
-                this.$data.info.push("Hello");
+                this.$data.history.push("Hello");
                 annyang!.start({ autoRestart: false, continuous: false });
               },
               800
@@ -81,5 +87,5 @@
 
     },
   })
-  export default class TripHistory extends Vue {}
+  export default class VoiceInterface extends Vue {}
 </script>

@@ -23,7 +23,7 @@
         dense
       >
         <v-list-item-group
-          v-model="group"
+          v-model="page"
         >
           <v-list-item>
             <v-spacer></v-spacer>
@@ -115,13 +115,13 @@
     </v-navigation-drawer>
 
     <v-main>
-      <div v-if="group==1">
+      <div v-if="page==1">
         <MainMap/>
       </div>
-      <div v-if="group==2">
-        <TripHistory/>
+      <div v-if="page==2">
+        <VoiceInterface/>
       </div>
-      <div v-if="group==4">
+      <div v-if="page==4">
         <LicenseISC/>
       </div>
     </v-main>
@@ -131,7 +131,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import MainMap from './components/MainMap.vue';
-import TripHistory from './components/TripHistory.vue';
+import VoiceInterface from './components/VoiceInterface.vue';
 import LicenseISC from './components/LicenseISC.vue';
 
 @Component({
@@ -139,21 +139,21 @@ import LicenseISC from './components/LicenseISC.vue';
 
   components: {
     MainMap,
-    TripHistory,
+    VoiceInterface,
     LicenseISC
   },
 
   data: () => ({
     drawer: false,
-    group: 2,
+    page: 2,
   }),
 
   watch: {
-    group () {
+    page () {
       this.$data.drawer = false
 
       // TODO
-      console.log(this.$data.group);
+      console.log(this.$data.page);
     },
   },
 })
