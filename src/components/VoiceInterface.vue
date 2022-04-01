@@ -19,8 +19,6 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
 
-  /* eslint-disable no-unused-vars */
-
   import tf from '@tensorflow/tfjs'; // eslint-disable-line no-unused-vars
   import { create } from '@tensorflow-models/speech-commands';
   import annyang from "../annyang.min";
@@ -43,6 +41,7 @@
   var isRemoteInit = false;
   var remoteResult: any;
 
+  // TODO: SCREEN OFF->weird state ISSUE
   @Component({
     name: 'VoiceInterface',
 
@@ -104,7 +103,7 @@
       }
 
       // Check the user response and assume they can't hear if the mic is working.
-      if (this.$props.status.microphone && !userGreeting) { this.$props.status.audio = false; return; }
+      if (!this.$props.status.microphone || !userGreeting) { this.$props.status.audio = false; return; }
 
       this.$data.query = "";
 
