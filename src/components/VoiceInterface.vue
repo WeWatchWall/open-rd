@@ -8,7 +8,7 @@
         elevation="2"
         style="height:70vh; text-align: center;"
       >
-        <v-icon size="60vw" color="primary">mdi-microphone</v-icon>  
+        <v-icon size="60vmin" color="primary">mdi-microphone</v-icon>  
         <div size="5vh">{{ query }}</div>
         <div size="5vh">History: {{ history }}</div>
       </v-card>
@@ -28,7 +28,7 @@
   // Delay in ms between local and remote recognition.
   const SWITCH_DELAY = 800;
   // Accuracy in % for keyword detection.
-  const DETECT_ACCURACY = 0.87;
+  const DETECT_ACCURACY = 0.93
   // Also responds to: *phone hits table*, diss, miss, tiss, fiss, stark, start, time, mime
   const recognizer = create(
     "BROWSER_FFT", // fourier transform type, not useful to change
