@@ -5,18 +5,16 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "postinstall": "npx patch-package"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@tensorflow-models/speech-commands": "0.3.9",
-    "@tensorflow/tfjs": "1.7.0",
     "@types/ol": "^6.5.3",
     "chart.js": "^3.7.1",
     "core-js": "^3.8.3",
     "flat-promise": "^1.0.2",
     "ol": "^6.13.0",
     "register-service-worker": "^1.7.2",
+    "stark-speech": "^1.0.1",
     "vue": "^2.6.14",
     "vue-chartjs": "^4.0.1",
     "vue-class-component": "^7.2.3",
