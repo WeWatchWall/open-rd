@@ -21,7 +21,7 @@
 
   import StarkSpeech from "stark-speech";
 
-  const starkSpeech = StarkSpeech.init(); 
+  const starkSpeech = StarkSpeech.init(undefined, `${location.href}/audio`); 
 
   // TODO: SCREEN OFF->weird state ISSUE
   @Component({
